@@ -24,20 +24,25 @@ function getText(cartItems){
 
   for(var i = 0; i < cartItems.length; i++){
     var getcartItems = cartItems[i];
+
+    var itemtotal = finditemtotal(getcartItems.count,getcartItems.price);
     itemsText += '名称：'+ getcartItems.name +
     '，数量：'+ getcartItems.count +
     cartItems[i].unit +'，单价：' +
     (getcartItems.price).toFixed(2) +
-    '(元)，小计：' +(getcartItems.count * getcartItems.price).toFixed(2) + '(元)\n';
-    itemtotal = getcartItems.count * getcartItems.price;
+    '(元)，小计：' +itemtotal.toFixed(2) + '(元)\n';
     totalamount += itemtotal;
   }
   var inventorytext ='***<没钱赚商店>购物清单***\n' +
-  itemsText +'----------------------\n' +
-  '总计：' +totalamount.toFixed(2) + '(元)\n' +
-  '**********************';
-  console.log(inventorytext);
+                      itemsText +'----------------------\n' +
+                      '总计：' +totalamount.toFixed(2) + '(元)\n' +
+                      '**********************';
+                      console.log(inventorytext);
 }
+function finditemtotal(count,price) {
+  return count * price;
+}
+
 
 function findCartItem(barcode, cartItems){
   var cartItem;
