@@ -33,7 +33,6 @@ function findItem(allItems,barcode) {
   return item;
 }
 
-
 function findCartItem(barcode, cartItems){
   var cartItem;
 

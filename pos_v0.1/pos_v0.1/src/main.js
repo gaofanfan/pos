@@ -1,13 +1,13 @@
-function printInventory(inputs) {
+function printInventory(items) {
   var cartItems = [];
 
-  for(var i = 0; i < inputs.length; i++) {
-    var cartItem = findCartItem(inputs[i].barcode, cartItems);
+  for(var i = 0; i < items.length; i++) {
+    var cartItem = findCartItem(items[i].barcode, cartItems);
     if(!cartItem) {
-      cartItems.push({barcode: inputs[i].barcode ,
-        name: inputs[i].name,
-        unit:inputs[i].unit,
-        price:inputs[i].price,
+      cartItems.push({barcode: items[i].barcode ,
+        name: items[i].name,
+        unit:items[i].unit,
+        price:items[i].price,
         count: 1
       });
     }else{
