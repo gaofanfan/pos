@@ -1,13 +1,24 @@
 function printInventory(barcode) {
-   var items = [];
-   var allItems = loadAllItems();
 
-   for(var i = 0;i < barcode.length;i++) {
-     var item = findItem(allItems,barcode[i]);
-     items.push(item);
-   }
-  var cartItems = [];
+  var items = getItems(barcode);
+  var cartItems = getcartItems(items);
+  var inventorytext = getText(cartItems);
+  console.log(inventorytext);
+}
 
+function getItems(barcode) {
+  var items = [];
+  var allItems = loadAllItems();
+
+  for(var i = 0;i < barcode.length;i++) {
+    var item = findItem(allItems,barcode[i]);
+    items.push(item);
+  }
+  return items;
+}
+
+function getcartItems(items) {
+  var  cartItems = [];
   for(var i = 0; i < items.length; i++) {
     var cartItem = findCartItem(items[i].barcode, cartItems);
 
@@ -18,13 +29,12 @@ function printInventory(barcode) {
         price:items[i].price,
         count: 1
       });
-    }else{
+    } else {
       cartItem.count ++;
+    }
   }
-}
 
-  getText(cartItems);
-
+  return cartItems;
 }
 
 function findItem(allItems,barcode) {
@@ -38,10 +48,10 @@ function findItem(allItems,barcode) {
   return item;
 }
 
-function findCartItem(barcode, cartItems){
+function findCartItem(barcode, cartItems) {
   var cartItem;
 
-  for(var i = 0; i < cartItems.length; i++){
+  for(var i = 0; i < cartItems.length; i++) {
 
     if(cartItems[i].barcode == barcode){
       cartItem = cartItems[i];
@@ -50,12 +60,11 @@ function findCartItem(barcode, cartItems){
   return cartItem;
 }
 
-function getText(cartItems){
+function getText(cartItems) {
   var itemsText ='';
   var totalamount = 0;
-  var itemtotal = 0;
 
-  for(var i = 0; i < cartItems.length; i++){
+  for(var i = 0; i < cartItems.length; i++) {
     var getcartItems = cartItems[i];
 
     var itemtotal = finditemtotal(getcartItems.count,getcartItems.price);
@@ -71,7 +80,7 @@ function getText(cartItems){
                        itemsText +'----------------------\n' +
                        '总计：' +totalamount.toFixed(2) + '(元)\n' +
                        '**********************';
-  console.log(inventorytext);
+    return inventorytext;
 }
 
 function finditemtotal(count,price) {
