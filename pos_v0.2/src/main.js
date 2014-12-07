@@ -4,6 +4,7 @@ function printInventory(barcode) {
   var cartItems = getcartItems(items);
   var inventorytext = getText(cartItems);
   console.log(inventorytext);
+
 }
 
 function getItems(barcode) {
@@ -24,10 +25,10 @@ function getcartItems(items) {
 
     if(!cartItem) {
       cartItems.push({barcode: items[i].barcode ,
-        name: items[i].name,
-        unit:items[i].unit,
-        price:items[i].price,
-        count: 1
+                     name: items[i].name,
+                     unit:items[i].unit,
+                     price:items[i].price,
+                     count: 1
       });
     } else {
       cartItem.count ++;
