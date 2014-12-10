@@ -15,10 +15,3 @@ Item.all = function() {
   new Item('ITEM000005', '方便面', '袋', 4.50)
   ];
 };
-
-Item.getItems = function(barcodes) {
-  var allItems = this.all();
-  return _.map(barcodes, function(barcode) {
-    return _.find(allItems, { barcode: barcode });
-  });
-};

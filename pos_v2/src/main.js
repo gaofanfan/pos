@@ -15,7 +15,7 @@ function getcartItems(tags) {
     barcode = splitArray[0];
     count = 1;
 
-    if(splitArray[1]){
+    if(splitArray[1]) {
       count = parseFloat(splitArray[1]);
     }
 
@@ -64,7 +64,7 @@ function getText(cartItems) {
   var subtotal = 0;
   var saveMoney = 0;
   var itemsText= '';
-
+  var currTime = moment().format('YYYY年MM月DD日 HH:mm:ss');
   for(var i = 0; i < cartItems.length; i++) {
     var promotionitem = findpromotionitem(cartItems[i].item.barcode,promotions[0]);
     if( promotionitem) {
@@ -91,9 +91,11 @@ function getText(cartItems) {
   }
   summaryText = '总计：' + sumtotal.toFixed(2) + '(元)\n';
 
-  inventorytext += itemsText +
-  '----------------------\n' +
-  '挥泪赠送商品：\n' +
+  inventorytext += '打印时间：' + currTime + '\n'
+   + '----------------------\n'
+   + itemsText +
+   '----------------------\n' +
+   '挥泪赠送商品：\n' +
   promotionText +
   '----------------------\n'
   + summaryText
