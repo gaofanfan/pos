@@ -1,12 +1,11 @@
-function Inventorytext(cart) {
-  this.cart = cart;
+function Inventorytext(cartItems) {
+  this.cartItems = cartItems;
 }
 Inventorytext.getText = function(cartItems) {
 
     var inventorytext = '***<没钱赚商店>购物清单***\n';
-    var summaryText = '';
+    var summaryText = 0;
     var promotions = loadPromotions();
-    var sumtotal = 0;
     var subtotal = 0;
     var saveMoney = 0;
     var itemsText ='';
@@ -21,13 +20,13 @@ Inventorytext.getText = function(cartItems) {
       }
       saveMoney += cartItems[i].item.price * Math.floor(cartItems[i].count / 3);
       subtotal = (cartItems[i].item.price) * count;
-      sumtotal += subtotal;
       itemsText += '名称：' + cartItems[i].item.name +
       '，数量：' + cartItems[i].count + cartItems[i].item.unit
       + '，单价：' + cartItems[i].item.price.toFixed(2) +'(元)' +
       '，小计：' + subtotal.toFixed(2) + '(元)\n';
+      summaryText += subtotal;
     }
-    summaryText = '总计：' + sumtotal.toFixed(2) + '(元)\n';
+
 
    inventorytext += '打印时间：' + currTime +'\n' + '----------------------\n'
     + itemsText +
@@ -35,7 +34,7 @@ Inventorytext.getText = function(cartItems) {
     '挥泪赠送商品：\n' +
     promotionText +
     '----------------------\n'
-    + summaryText
+    + '总计：' + summaryText.toFixed(2) + '(元)\n'
     + '节省：' + saveMoney.toFixed(2) + '(元)\n'+
     '**********************';
     return inventorytext;
@@ -65,4 +64,3 @@ Inventorytext.getText = function(cartItems) {
     }
     return promotionText;
   }
-  
