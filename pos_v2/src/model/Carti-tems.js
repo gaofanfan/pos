@@ -1,33 +1,37 @@
-function CartItem(tags, count) {
-  this.tags = tags;
+function CartItem(item, count) {
+  this.item = item;
   this.count = count || 0;
 }
 
 CartItem.getCartItems = function(tags) {
   var cartItems = [];
   var allItems = loadAllItems();
-  _.forEach(tags,function(tags){
+
+  _.forEach(tags, function(tags) {
     var splitArray = tags[i].split('-');
     var barcode = splitArray[0];
     var count = 1;
 
     if (splitArray[1]) {
       count = parseFloat(splitArray[1]);
-    }  
-    var cartItem = _.find(cartItems,function(cartItem,barcode){
+    }
+
+    var cartItem = _.find(cartItems, function(cartItem, barcode) {
       return cartItem.item.barcode === barcode;
     });
 
     if (cartItem) {
       cartItem.count += count;
     } else {
-      var newitem = CartItem.findItem(allItems,barcode);
-      cartItems.push({ item: newitem, count: count});
+    var newItem = _.find(allItems, function(barcode) {
+      return allItems.barcode === barcode;
+      });
+      var newCartItem = new CartItem(newItem, count);
+      cartItems.push(newCartItem);
     }
-  }
-});
+  });
   return cartItems;
-}
+};
   // for(var i = 0; i < tags.length; i++) {
   //   var splitArray = tags[i].split('-');
   //   var barcode = splitArray[0];
@@ -56,14 +60,13 @@ CartItem.getCartItems = function(tags) {
 //   }
 //   return cartItem;
 // }
-
-CartItem.findItem = function(allItems,barcode) {
-  var newitem;
-
-  for(var i = 0;i < allItems.length;i++) {
-    if (allItems[i].barcode === barcode) {
-      newitem = allItems[i];
-    }
-  }
-  return newitem;
-}
+// CartItem.findItem = function(allItems,barcode) {
+//   var newitem;
+//
+//   for(var i = 0;i < allItems.length;i++) {
+//     if (allItems[i].barcode === barcode) {
+//       newitem = allItems[i];
+//     }
+//   }
+//   return newitem;
+// }
