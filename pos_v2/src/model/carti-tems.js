@@ -1,51 +1,37 @@
-function CartItem(tags, count) {
-  this.tags = tags;
+function CartItem(item, count) {
+  this.item = item;
   this.count = count || 0;
+  this.savedCount = 0;
+  this.savedPrice = 0;
 }
 
-CartItem.getCartItems = function(tags) {
-    var  cartItems = [];
-    var allItems = loadAllItems();
+CartItem.prototype.getBarcode = function() {
+  return this.item.barcode;
+};
 
-    for(var i = 0; i < tags.length; i++) {
-      var splitArray = tags[i].split('-');
-      barcode = splitArray[0];
-      count = 1;
+CartItem.prototype.getPrice = function() {
+  return this.item.price;
+};
 
-      if (splitArray[1]) {
-        count = parseFloat(splitArray[1]);
-      }
+CartItem.prototype.hasPromotion = function() {
+  return this.savedCount !== 0 || this.savedPrice !== 0;
+};
 
-      var cartItem = CartItem.findCartItem(barcode, cartItems);
+CartItem.prototype.getOriginSubtotal = function() {
+  return this.item.price * this.count;
+};
 
-      if (cartItem) {
-        cartItem.count += count;
-      } else {
-        var  newitem = CartItem.findItem(allItems,barcode);
-        cartItems.push({ item: newitem , count: count});
-      }
-    }
-    return cartItems;
-  }
+CartItem.prototype.getSubtotal = function() {
+  return this.getOriginSubtotal() - this.savedPrice;
+};
 
-CartItem.findCartItem = function(barcode, cartItems) {
-    var cartItem;
+CartItem.prototype.toString = function() {
+  return '名称：' + this.item.name +
+  '，数量：' + this.count + this.item.unit +
+  '，单价：' + this.item.price.toFixed(2) +
+  '(元)，小计：' + this.getSubtotal().toFixed(2) + '(元)';
+};
 
-    for(var i = 0; i < cartItems.length; i++) {
-      if (cartItems[i].item.barcode === barcode) {
-        cartItem = cartItems[i];
-      }
-    }
-    return cartItem;
-  }
-
-CartItem.findItem = function(allItems,barcode) {
-    var newitem;
-
-    for(var i = 0;i < allItems.length;i++) {
-      if (allItems[i].barcode === barcode) {
-        newitem = allItems[i];
-      }
-    }
-    return newitem;
-  }
+CartItem.prototype.toPromotionString = function() {
+  return '名称：' + this.item.name + '，数量：' + this.savedCount + this.item.unit;
+};
